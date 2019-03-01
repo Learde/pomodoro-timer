@@ -2,16 +2,11 @@ const gulp = require('gulp');
 const concat = require('gulp-concat');
 const autoprefixer = require('gulp-autoprefixer');
 const cleanCSS = require('gulp-clean-css');
-const uglify = require('gulp-uglify');
+const uglify = require('gulp-uglify-es').default;
 const del = require('del');
 const browserSync = require('browser-sync').create();
 const sourcemaps = require('gulp-sourcemaps');
 const sass = require('gulp-sass');
-
-const jsFiles = [
-    './src/js/lib.js',
-    './src/js/some.js'
-];
 
 function styles() {
     return gulp.src('./src/scss/main.scss')
@@ -38,11 +33,9 @@ function styles() {
 }
 
 function scripts() {
-    return gulp.src(jsFiles)
-                .pipe(concat('all.js'))
-                .pipe(uglify({
-                    toplevel: true
-                }))
+    return gulp.src('./src/js/**/*.js')
+                .pipe(concat('all.min.js'))
+                .pipe(uglify())
                 .pipe(gulp.dest('./build/js'))
                 .pipe(browserSync.stream());
 }

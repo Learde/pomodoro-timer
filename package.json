@@ -9,7 +9,9 @@
   "author": "learde",
   "license": "ISC",
   "dependencies": {
-    "del": "^3.0.0"
+    "del": "^3.0.0",
+    "gulp-util": "^3.0.8",
+    "pump": "^3.0.0"
   },
   "devDependencies": {
     "browser-sync": "^2.26.3",
@@ -19,7 +21,7 @@
     "gulp-concat": "^2.6.1",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
-    "gulp-uglify": "^3.0.1",
+    "gulp-uglify-es": "^1.0.4",
     "node-normalize-scss": "^8.0.0",
     "node-sass": "^4.11.0"
   }
