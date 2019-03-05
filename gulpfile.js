@@ -32,8 +32,13 @@ function styles() {
                 .pipe(browserSync.stream());
 }
 
+function libs() {
+    return gulp.src('./src/js/vuejs/vue.js')
+                .pipe(gulp.dest('./build/libs'))
+}
+
 function scripts() {
-    return gulp.src('./src/js/**/*.js')
+    return gulp.src('./src/js/custom/*.js')
                 .pipe(concat('all.min.js'))
                 .pipe(uglify())
                 .pipe(gulp.dest('./build/js'))
@@ -61,7 +66,7 @@ gulp.task('script', scripts);
 gulp.task('watch', watch);
 
 gulp.task('build', gulp.series(clean,
-                        gulp.parallel(styles, scripts)
+                        gulp.parallel(styles, scripts, libs)
                     ));
 
 gulp.task('dev', gulp.series('build', 'watch'));

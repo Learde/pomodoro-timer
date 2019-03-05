@@ -1,26 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Pomodoro Timer</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css">
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.min.js"
-      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-      crossorigin="anonymous"></script>
-    <script src="./build/js/all.min.js"></script>
+	<meta charset='utf-8'>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<title>test</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+	<style>
+		input{
+			display: block;
+		}
+		label{
+			float: left;
+		}
+    </style>
+    <script src="build/libs/vue.js"></script>
 </head>
 <body>
-    <div>
-        <div class="timer">
-            <span class="minutes">25</span>:<span class="seconds">00</span>
-            <div class="options">
-                
-            </div>
-        </div>
-        <button class="start">Start</button>
-    </div>
+	<div id='pomodoro-timer'>
+		{{ timer }}
+		<template v-if='!isStartPressed'>
+			<button v-if='!isBreak && !isLongBreak' v-on:click='startPomodoro'>Старт</button>
+			<button v-else-if='isBreak && !isLongBreak' v-on:click='startBreak'>Старт</button>
+			<button v-else-if='!isBreak && isLongBreak' v-on:click='startLongBreak'>Старт</button>
+		</template>
+		<button v-else-if='isStartPressed' v-on:click='pauseTimer'>Пауза</button>
+
+		<button v-if='isNowPomodoro' v-on:click='stopTimer'>Стоп</button>
+		<button v-else-if='!isNowPomodoro' v-on:click='skipBreak'>Пропустить</button>
+
+		<p>Помидор #{{ amount }}</p>
+
+		<form>
+			<label for='pomodoro'>Продолжительность помидора:</label>
+			<input v-model='pomodoro.mins' v-on:change='setPomodoroMinutes' type='number' id='pomodoro'>
+
+			<label for='shortBreak'>Продолжительность короткого перерыва:</label>
+			<input v-model='shortBreak.mins' v-on:change='setBreakMinutes' type='number' id='shortBreak'>
+
+			<label for='longBreak'>Продолжительность длинного перерыва:</label>
+			<input v-model='longBreak.mins' v-on:change='setLongBreakMinutes' type='number' id='longBreak'>
+
+			<label for='periodLongBreak'>Длинный перерыв каждые</label>
+			<input v-model='periodLongBreak' type='number' id='periodLongBreak'>
+
+			<label for='autobreak'>Автоматически начинать перерыв</label>
+			<input v-model='autostartBreak' type='checkbox' id='autobreak'>
+
+			<label for='autopomodoro'>Автоматически начинать помидор</label>
+			<input v-model='autostartPomodoro' type='checkbox' id='autopomodoro'>
+		</form>
+	</div>
+
+	<!-- custom scripts -->
+	<script src='./build/js/all.min.js'></script>
 </body>
 </html>
